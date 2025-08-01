@@ -55,7 +55,7 @@
           </button>
           
           <!-- GitHub链接 -->
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+          <a href="https://github.com/ATaoyoyo/xhs-crawler-web" target="_blank" rel="noopener noreferrer"
             class="p-2 rounded-lg transition-colors duration-200"
             :class="isDarkMode ? 'text-gray-400 hover:text-white hover:bg-gray-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'"
             title="查看源码">
