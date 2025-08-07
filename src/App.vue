@@ -19,7 +19,7 @@
         <!-- 笔记内容展示 -->
         <div v-if="noteData && !isLoading" class="note-content-area">
           <!-- 笔记基本信息 -->
-          <!-- <NoteContent :noteData="noteData" /> -->
+          <NoteContent :noteData="noteData" />
 
           <!-- 下载操作区域 -->
           <DownloadActions
