@@ -20,7 +20,7 @@ export const getPostContentApi = async (url) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ content: url }),
+    body: JSON.stringify({content: url}),
   });
   return res.json();
 };
@@ -32,11 +32,11 @@ export const getNoteData = async (url) => {
   }
 
   const res = await getPostContentApi(url);
-  if (!res.success) {
+  if (res.code !== 200) {
     throw new Error("请求失败");
   }
   const data = res.data;
-  const { detail, media, tags, user, interact } = data;
+  const {detail, media, tags, user, interact} = data;
 
   return {
     id: detail.postId,
@@ -50,7 +50,7 @@ export const getNoteData = async (url) => {
     comments: interact.commentCount,
     shares: interact.shareCount,
     collects: interact.collectedCount,
-    images: media.postImages.map((item) => ({ url: item })),
-    videos: media.postVideos.map((item) => ({ url: item })),
+    images: media.postImages.map((item) => ({url: item})),
+    videos: media.postVideos.map((item) => ({url: item})),
   };
 };
