@@ -116,6 +116,13 @@
 			:type="toast.type"
 			@close="closeToast"
 		/>
+
+		<!-- 小程序二维码弹窗 -->
+		<MiniAppModal
+			:visible="showMiniAppModal"
+			:isDarkMode="isDarkMode"
+			@close="closeMiniAppModal"
+		/>
 	</div>
 </template>
 
@@ -131,6 +138,7 @@ import VideoPreview from "./components/media/VideoPreview.vue";
 import BackToTop from "./components/common/BackToTop.vue";
 import LoadingSpinner from "./components/common/LoadingSpinner.vue";
 import Toast from "./components/common/Toast.vue";
+import MiniAppModal from "./components/common/MiniAppModal.vue";
 import {
 	downloadResource,
 	downloadMultipleResources,
@@ -152,6 +160,7 @@ export default {
 		BackToTop,
 		LoadingSpinner,
 		Toast,
+		MiniAppModal,
 	},
 	data() {
 		return {
@@ -159,6 +168,7 @@ export default {
 			isLoading: false,
 			noteData: null,
 			showBackToTop: false,
+			showMiniAppModal: false,
 			isImagePreviewOpen: false,
 			previewImage: {
 				url: "",
@@ -189,6 +199,15 @@ export default {
 	mounted() {
 		// 初始化暗黑模式
 		this.isDarkMode = localStorage.getItem("darkMode") === "true";
+
+		// 检查是否今天已显示过小程序弹窗
+		const today = new Date().toDateString();
+		const lastShownDate = localStorage.getItem("miniAppModalLastShown");
+
+		if (lastShownDate !== today) {
+			this.showMiniAppModal = true;
+			localStorage.setItem("miniAppModalLastShown", today);
+		}
 
 		// 监听滚动事件
 		window.addEventListener("scroll", this.handleScroll);
@@ -428,6 +447,11 @@ export default {
 		// 关闭Toast
 		closeToast() {
 			this.toast.show = false;
+		},
+
+		// 关闭小程序弹窗
+		closeMiniAppModal() {
+			this.showMiniAppModal = false;
 		},
 	},
 };
