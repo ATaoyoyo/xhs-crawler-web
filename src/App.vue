@@ -201,12 +201,23 @@ export default {
 		this.isDarkMode = localStorage.getItem("darkMode") === "true";
 
 		// 检查是否今天已显示过小程序弹窗
-		const today = new Date().toDateString();
+		// 每天早上8点重置，当天8点后不再显示
+		const now = new Date();
+		const today = now.toLocaleDateString('zh-CN');
 		const lastShownDate = localStorage.getItem("miniAppModalLastShown");
+		const lastShownDay = localStorage.getItem("miniAppModalLastShownDay");
+		const currentHour = now.getHours();
 
-		if (lastShownDate !== today) {
-			this.showMiniAppModal = true;
-			localStorage.setItem("miniAppModalLastShown", today);
+		// 如果是同一天且当前时间在8点之后，不再显示
+		if (lastShownDate === today && lastShownDay === today && currentHour >= 8) {
+			this.showMiniAppModal = false;
+		} else if (lastShownDate !== today || lastShownDay !== today) {
+			// 新的一天或首次访问，8点后显示
+			if (currentHour >= 8) {
+				this.showMiniAppModal = true;
+				localStorage.setItem("miniAppModalLastShown", today);
+				localStorage.setItem("miniAppModalLastShownDay", today);
+			}
 		}
 
 		// 监听滚动事件
