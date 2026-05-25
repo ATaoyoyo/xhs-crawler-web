@@ -19,6 +19,7 @@ export const getPostContentApi = async (url) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "X-Client-Type": "web",
     },
     body: JSON.stringify({content: url}),
   });
